@@ -1,32 +1,28 @@
-const onError = res => {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(res.status);
-};
-
 class Api {
   constructor({ serverUrl, headers }) {
     this._serverUrl = serverUrl;
     this._headers = headers;
   };
 
+  _checkResponse = res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(res.status);
+    };
+
   getUserInfo() {
     return fetch (`${this._serverUrl}/users/me`, {
-      headers: {
-        authorization: this._headers.authorization
-      }
+      headers: this._headers
     })
-      .then (onError);
+      .then (this._checkResponse);
   };
 
   getInitialCards() {
     return fetch(`${this._serverUrl}/cards`, {
-      headers: {
-        authorization: this._headers.authorization
-      }
+      headers: this._headers
     })
-      .then (onError);
+      .then (this._checkResponse);
   };
 
   getAppInfo() {
@@ -36,79 +32,61 @@ class Api {
   addCard(name, info) {
     return fetch(`${this._serverUrl}/cards`, {
       method: 'POST',
-      headers: {
-        authorization: this._headers.authorization,
-        'Content-Type': this._headers['Content-Type']
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: name,
         link: info
       })
     })
-      .then (onError);
+      .then (this._checkResponse);
   };
 
   deleteCard(cardId) {
     return fetch(`${this._serverUrl}/cards/${cardId}`, {
       method: 'DELETE',
-      headers: {
-        authorization: this._headers.authorization,
-        'Content-Type': this._headers['Content-Type']
-      },
+      headers: this._headers
     })
-      .then (onError);
+      .then (this._checkResponse);
   };
 
   editAvatar(url) {
     return fetch(`${this._serverUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: {
-        authorization: this._headers.authorization,
-        'Content-Type': this._headers['Content-Type']
-      },
+      headers: this._headers,
       body: JSON.stringify({
         avatar: url,
       })
     })
-      .then (onError);
+      .then (this._checkResponse);
   };
 
   editProfile(data) {
     return fetch(`${this._serverUrl}/users/me`, {
       method: 'PATCH',
-      headers: {
-        authorization: this._headers.authorization,
-        'Content-Type': this._headers['Content-Type']
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         about: data.info
       })
     })
-      .then (onError);
+      .then (this._checkResponse);
   };
 
   //добавление лайка
   addLike(cardId) {
     return fetch(`${this._serverUrl}/cards/${cardId}/likes`, {
       method: 'PUT',
-      headers: {
-        authorization: this._headers.authorization,
-        'Content-Type': this._headers['Content-Type']
-      },
+      headers: this._headers
     })
-      .then (onError);
+      .then (this._checkResponse);
   }
 
   deleteLike(cardId) {
     return fetch(`${this._serverUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
-      headers: {
-        authorization: this._headers.authorization,
-        'Content-Type': this._headers['Content-Type']
-      },
+      headers: this._headers
     })
-      .then (onError);
+      .then (this._checkResponse);
   };
 }
 

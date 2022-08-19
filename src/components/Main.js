@@ -4,7 +4,7 @@ import Card from './Card.js'
 
 function Main(props) {
   const [userName, setUserName] = React.useState('');
-  const [userInfo, setUserInfo] = React.useState('');
+  const [userDescription, setUserDescription] = React.useState('');
   const [userAvatar, setUserAvatar] = React.useState('');
   const [cards, setCards] = React.useState([]);
 
@@ -12,7 +12,7 @@ function Main(props) {
     api.getAppInfo()
       .then(([date, cards]) => {
         setUserName(date.name);
-        setUserInfo(date.about);
+        setUserDescription(date.about);
         setUserAvatar(date.avatar);
         setCards(cards);
       })
@@ -26,15 +26,15 @@ function Main(props) {
   return (
     <main className="content">
       <section className="profile">
-        <div className="profile__avatar"  style={imageStyle}  onClick={props.editAvatar}></div>
+        <div className="profile__avatar"  style={imageStyle}  onClick={props.onEditAvatar}></div>
         <div>
           <div className="profile__info-block">
             <h1 className="profile__profile-name">{userName}</h1>
-            <button type="button" className="profile__button-edit" onClick={props.editProfile}></button>
+            <button type="button" className="profile__button-edit" onClick={props.onEditProfile}></button>
           </div>
-          <p className="profile__profile-info">{userInfo}</p>
+          <p className="profile__profile-info">{userDescription}</p>
         </div>
-        <button type="button" className="profile__button-add" onClick={props.addCard}></button>
+        <button type="button" className="profile__button-add" onClick={props.onAddPlace}></button>
       </section>
 
       <section>
@@ -43,7 +43,7 @@ function Main(props) {
             <Card
               key={card._id}
               card={card}
-              onCardClick={props.openImageFullscreen}
+              onCardClick={props.onCardClick}
             />
           ))}
         </ul>

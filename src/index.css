@@ -3,6 +3,10 @@
 
 /* body page */
 
+@import url(blocks/root/root.css);
+
+/* body page */
+
 @import url(blocks/page/page.css);
 
 /* section header */
