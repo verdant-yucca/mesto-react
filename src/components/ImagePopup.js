@@ -1,12 +1,12 @@
 import React from 'react';
 
-function ImagePopup(props) {
+function ImagePopup({card, onPopupClose}) {
   return (
-    <div className={`popup popup_type_image-fullscreen ${props.card && 'popup_active'}`}>
+    <div className={`popup popup_type_image-fullscreen ${card && 'popup_active'}`}>
       <div className="popup__container-image-fullscreen">
-        <img className="popup__image" src={props.card && props.card.link} alt={props.card && props.card.name} />
-        <p className="popup__image-text">{props.card && props.card.name}</p>
-        <button type="button" className="popup__button-close" onClick={props.onPopupClose}></button>
+        <img className="popup__image" src={card && card.link} alt={card && card.name} />
+        <p className="popup__image-text">{card && card.name}</p>
+        <button type="button" className="popup__button-close" onClick={onPopupClose}></button>
       </div>
     </div>
   );

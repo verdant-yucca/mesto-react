@@ -66,28 +66,19 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({
         name: data.name,
-        about: data.info
+        about: data.about
       })
     })
       .then (this._checkResponse);
   };
 
-  //добавление лайка
-  addLike(cardId) {
+  changeLikeCardStatus(cardId, isLiked) {
     return fetch(`${this._serverUrl}/cards/${cardId}/likes`, {
-      method: 'PUT',
+      method: isLiked ? 'PUT' : 'DELETE',
       headers: this._headers
     })
       .then (this._checkResponse);
   }
-
-  deleteLike(cardId) {
-    return fetch(`${this._serverUrl}/cards/${cardId}/likes`, {
-      method: 'DELETE',
-      headers: this._headers
-    })
-      .then (this._checkResponse);
-  };
 }
 
 const api = new Api({
